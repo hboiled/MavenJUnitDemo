@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: hb.MathUtilsTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 1, Errors: 0, Skipped: 1, Time elapsed: 0.09 s <<< FAILURE! - in hb.MathUtilsTest
+hb.MathUtilsTest.squaresNumber  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: testing ==> expected: <4> but was: <3>
+	at hb.MathUtilsTest.squaresNumber(MathUtilsTest.java:48)
+
