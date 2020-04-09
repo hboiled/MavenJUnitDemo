@@ -2,10 +2,13 @@ package hb;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.TestReporter;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,11 +22,13 @@ public class MathUtilsTest {
     }
 
     @AfterEach
-    public void displayTestName(TestInfo info) {
+    public void displayTestName(TestInfo info, TestReporter reporter) {
         System.out.println(info.getDisplayName() + " executed.");
+        //reporter.publishEntry("Running the" +info.getDisplayName() + " test.");
     }
 
     @DisplayName("Add test")
+    @Tag("BasicMath")
     @RepeatedTest(value = 2, name = "{displayName} - repetition {currentRepetition} of {totalRepetitions}")
     public void addTest(RepetitionInfo repetitionInfo) {
         int expected = 2;
@@ -40,12 +45,27 @@ public class MathUtilsTest {
         assertEquals(expected, actual, "Area of circle calculation based on radius must be successful");
     }
 
-    @Test 
-    public void squaresNumber() {
-        double expected = 25;
-        double actual = mathUtils.squareNumber(5);
-        assertEquals(expected, actual, "The square of number passed should be calculated");
+    @Nested
+    @Tag("BasicMath")
+    class SquareTest {        
+        
+        @Test 
+        @DisplayName("Nested square test with positive nums")
+        public void squaresPosNum() {
+            double expected = 25;
+            double actual = mathUtils.squareNumber(5);
+            assertEquals(expected, actual, "The square of number passed should be calculated");
+        }
+
+        @Test
+        @DisplayName("Nested square test with negative nums")
+        public void squaresNegNum() {
+            double expected = 100;
+            double actual = mathUtils.squareNumber(-10);
+            assertEquals(expected, actual, "The square of negative num should be positive");
+        }
     }
+    
 
     @Test
     @Disabled
@@ -64,6 +84,7 @@ public class MathUtilsTest {
     }
 
     @Test
+    @Tag("assertAll")
     public void assertingAll() {
         assertAll(
             () -> assertEquals(4, mathUtils.multiply(2, 2), "Should return the correct product"),
